@@ -43,7 +43,7 @@ class Cake1(models.Model):
     # img_data.short_decription = "图片预览222"
 
     def image(self):
-        return '<img src="/uploads/img/%s" width="50px" height="50px" />'% self.img
+        return '<img src="/static/img/%s" width="50px" height="50px" />'% self.img
 
     image.allow_tags = True
 
