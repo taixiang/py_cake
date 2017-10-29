@@ -1,10 +1,11 @@
 $(function(){
-    // $('.am-dropdown').on('mouseover',function(){
-    //     $(this).addClass('am-active');
-    // });
-    // $('.am-dropdown').on('mouseout',function(){
-    //     $(this).removeClass('am-active');
-    // });
+//     $('.am-dropdown').on('mouseover',function(){
+//         $(this).addClass('am-active');
+//     });
+//     $('.am-dropdown').on('mouseout',function(){
+//         $(this).removeClass('am-active');
+//     });
+//
 //     if($('.get').width() < 640){
 //     $('.get').height($('.get').width() / ( 1920 / 278 ));
 //     alert($('.get').height());
@@ -48,7 +49,7 @@ if($(window).width() < 700 ){
 $(window).resize(function(){
 $('.am_img_bg').height($('.am_img_bg').width());
 });
-//@首页 用户名截取
+ //@首页 用户名截取
 $('.am_imglist_user_font').each(
   function(){
      if($(this).text().length >= 13){
@@ -64,16 +65,16 @@ $('.am_imglist_user_font').each(
 });
 
 //@首页 数字跳动
-  var options = {
-  useEasing : true,
-  useGrouping : true,
-  separator : '',
-  decimal : '.',
-  prefix : '',
-  suffix : ''
-};
-var banner_num = new CountUp("banner_num", 956000, 956214, 0, 5, options);
-banner_num.start();
+//  var options = {
+//  useEasing : true,
+//  useGrouping : true,
+//  separator : '',
+//  decimal : '.',
+//  prefix : '',
+//  suffix : ''
+//};
+//var banner_num = new CountUp("banner_num", 956000, 956214, 0, 5, options);
+//banner_num.start();
 });
 
 //动画效果
