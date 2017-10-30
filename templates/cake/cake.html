@@ -9,30 +9,30 @@
     <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
   am-avg-md-3 am-avg-lg-6 am-gallery-default">
 
-         {% for cake in allcake %}
+        {% for cake in allcake %}
         <li>
             <div class="am-gallery-item am_list_block">
                 <a href="###" class="am_img_bg">
-                    <img class="am_img animated" src="{% static 'pic/head0.png' %}"
-                         data-original="http://img.petshow.cc/pet_show/2015_08/6d3c22171da582f569702bad45d9a4c6.jpg"
-                         alt="远方 有一个地方 那里种有我们的梦想"/>
+                    <img class="am_img animated" src="{% static 'img/loading.gif' %}"
+                         data-original="/static/img/{{cake.img}}"
+                         alt="满街香蛋糕欢迎您"/>
                 </a>
 
-                <div class="am_listimg_info"><span class="am-icon-heart"> 132</span><span
-                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
+                <div class="am_listimg_info">
+                    <span class="am-icon-cny am-danger"
+                          style="margin-right:0px;color:#ff0000;font-size:15px">{{cake.price}}</span>
+                </div>
+                <span class="am_imglist_user_font">{{cake.name}}</span>
 
             </div>
-            <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="{% static 'pic/head0.png' %}" alt=""></span><span
-                    class="am_imglist_user_font">路见不平Eason吼</span></a>
         </li>
 
-    {% endfor %}
+        {% endfor %}
 
     </ul>
 </div>
 
 <script src="{% static 'js/petshow.js' %}"></script>
-
 
 
 {% endblock %}

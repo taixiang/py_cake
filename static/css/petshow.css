@@ -54,7 +54,7 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover { backgroun
 .am-icon-heart:before { font-size: 14px; margin-right: 8px;}
 .am-icon-comments:before { font-size: 14px; margin-right: 8px;}
 .am_listimg_right {  float: right; margin-right: 0;}
-.am_listimg_info span { margin-right: 15px; font-size: 12px; }
+.am_listimg_info span {  font-size: 12px; }
 .banner_nav a { color: #535353; display: inline-block; margin: 0 5px;}
 .banner_nav .banner_hover {color: #ff5656;}
 .am-g .avg_list { background: #fff; }
