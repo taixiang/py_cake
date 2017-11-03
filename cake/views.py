@@ -22,3 +22,7 @@ def cakeList(request, category_id):
     print(111111)
     print(type(category_id))
     return render(request, "cake/cake.html", {"categorys": categorys, "allcake": allcake, "cate_id": int(category_id)})
+
+
+def cakeDetail(request, category_id):
+    return render(request, "cake/cake.html", {"categorys": categorys, "allcake": allcake, "cate_id": int(category_id)})
