@@ -1,0 +1,28 @@
+{% extends "cake/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+<div class="am_tuya">
+<div class="am_tuya_user">
+<div class="am_tuya_user_info">
+  <div class="ztlb_nr_blockc_r_title">{{detail.name}}</div>
+</div>
+</div>
+
+<div class="am_tuya_content">
+<div class="am_tuya_content_l">
+  <div class="am_albums">
+<img src="/static/img/{{detail.img}}" alt="">
+  </div>
+  <div class="am_tuya_more">
+<div class="am_tuya_oneword">我要在你们心中奔腾，你们怕不怕？</div>
+  </div>
+  <div class="am_news_load"><span><i  class="am-icon-spinner am-icon-spin"></i> 查看更多讨论</span></div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
