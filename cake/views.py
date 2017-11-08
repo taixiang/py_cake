@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from .models import Category, Cake1
 
 
-# Create your views here.
+# Create your views here.分页
 
 
 def category(request):
@@ -19,13 +19,10 @@ def category(request):
 def cakeList(request, category_id):
     categorys = Category.objects.all()
     allcake = Cake1.objects.filter(category_id=category_id)
-    print(111111)
-    print(type(category_id))
     return render(request, "cake/cake.html", {"categorys": categorys, "allcake": allcake, "cate_id": int(category_id)})
 
 
 def cakeDetail(request, cake_id):
     cake_detail = Cake1.objects.get(id=cake_id)
-
-    print(cake_detail)
-    return render(request, "cake/detail.html", {"detail": cake_detail})
+    categorys = Category.objects.all()
+    return render(request, "cake/detail.html", {"categorys": categorys, "detail": cake_detail})

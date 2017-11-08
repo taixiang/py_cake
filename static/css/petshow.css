@@ -149,7 +149,7 @@ content: " ";display: block;margin-top: -7px;margin-left: -3px; }
 .am_tuya_user_info_name { font-size: 20px; color: #222; font-weight: 600;}
 .am_tuya_content { max-width: 900px;}
 .am_tuya_content_l { width: 550px; float: left;}
-.am_albums { width: 550px; height: 550px;}
+.am_albums { width: 550px;}
 .am_tuya_content_r { width: 325px; float:right;}
 .am_tuya_user_info_time { margin-right: 15px;}
 .am_tuya_more { width: 100%; overflow: hidden;background: #fff;}
