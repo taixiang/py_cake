@@ -17,6 +17,10 @@ class Cake1Admin(admin.ModelAdmin):
     formfield_overrides = {models.ImageField: {'widget': ImageWidget}}
     list_filter = ('category_id', )
     search_fields = ('name',)
+    fieldsets = [
+        (None, {'fields': ['name', 'price', 'discount_price', 'img', 'desc', 'pub_time', 'category_id']}),
+    ]
+    # list_per_page = 5
     
 
 

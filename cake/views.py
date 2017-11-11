@@ -19,7 +19,9 @@ def category(request):
 def cakeList(request, category_id):
     categorys = Category.objects.all()
     allcake = Cake1.objects.filter(category_id=category_id)
-    return render(request, "cake/cake.html", {"categorys": categorys, "allcake": allcake, "cate_id": int(category_id)})
+    print(33333)
+    print(allcake)
+    return render(request, "cake/cake.html", {"categorys": categorys, "allcake": allcake, "cake_id": int(category_id)})
 
 
 def cakeDetail(request, cake_id):
