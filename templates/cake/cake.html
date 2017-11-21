@@ -32,6 +32,36 @@
     </ul>
 </div>
 
+
+<ul class="am-pagination">
+
+    {% if allcake.has_previous %}
+    <li>
+        <a href="?page={{ allcake.previous_page_number }}">&laquo;</a>
+    </li>
+    {% else %}
+        <li class="am-disabled"><a href="#">&laquo;</a></li>
+    {% endif %}
+
+    {% for pg in allcake.paginator.page_range %}
+    {% if allcake.number == pg %}
+        <li class="am-active"><a href="?page={{ pg }}">{{pg}}</a></li>
+    {% else %}
+        <li><a href="?page={{ pg }}">{{pg}}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if allcake.has_next %}
+        <li>
+            <a href="?page={{ allcake.next_page_number }}" >&raquo;</a>
+        </li>
+    {% else %}
+        <li class="am-disabled"><a href="#">&raquo;</a></li>
+    {% endif %}
+
+</ul>
+
+
 <script src="{% static 'js/petshow.js' %}"></script>
 
 

@@ -28,6 +28,7 @@ class Cake1(models.Model):
     img = models.ImageField("图片", upload_to="photos/%Y/%m/%d")
     desc = models.CharField("描述", max_length=500)
     label = models.CharField("标签", max_length=400)
+    cake_desc = models.TextField("文本", null=True, blank=True, help_text="z这是文本信息")
     order = models.IntegerField("权重", default=0)
     pub_time = models.DateTimeField("时间", default=timezone.now)
     category_id = models.ManyToManyField("Category", related_name="cake_post", verbose_name="类别")
