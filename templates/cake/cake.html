@@ -12,7 +12,7 @@
         {% for cake in allcake %}
         <li>
             <div class="am-gallery-item am_list_block">
-                <a href="{% url 'cake:detail' cake.id %}" class="am_img_bg">
+                <a href="{% url 'cake:detail' cake.id %}" class="am_img_bg" >
                     <img class="am_img animated" src="{% static 'img/loading.gif' %}"
                          data-original="/static/img/{{cake.img}}"
                          alt="满街香蛋糕欢迎您"/>

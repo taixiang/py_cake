@@ -13,10 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url, include, handler403, handler404, handler500
 from django.contrib import admin
+from cake import views
 
 urlpatterns = [
     url(r'^cake/', include('cake.urls', namespace='cake', app_name='cake')),
     url(r'^admin/', admin.site.urls),
 ]
+handler403 = views.page_not_find
+handler404 = views.page_not_find
+handler500 = views.page_not_find

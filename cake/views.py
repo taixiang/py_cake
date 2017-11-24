@@ -13,7 +13,7 @@ def category(request):
     # cake = categorys.cake1_set.all()
     # w = get_list_or_404(Cake1, category_id=categorys[0].id)
     print(222222)
-    paginator = Paginator(allcake, 1)
+    paginator = Paginator(allcake, 5)
     page = request.GET.get('page')
     # if page:
     #     cake_list = paginator.page(page).object_list
@@ -33,7 +33,7 @@ def category(request):
 def cakeList(request, category_id):
     categorys = Category.objects.all()
     allcake = Cake1.objects.filter(category_id=category_id)
-    paginator = Paginator(allcake, 1)
+    paginator = Paginator(allcake, 5)
     page = request.GET.get('page')
     # if page:
     #     cake_list = paginator.page(page).object_list
@@ -55,3 +55,7 @@ def cakeDetail(request, cake_id):
     cake_detail = Cake1.objects.get(id=cake_id)
     categorys = Category.objects.all()
     return render(request, "cake/detail.html", {"categorys": categorys, "detail": cake_detail})
+
+
+def page_not_find(request):
+    return render(request, "cake/404.html")

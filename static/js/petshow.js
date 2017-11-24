@@ -19,6 +19,10 @@ $(window).resize(function(){
 $('.am_listimg_info .am_imglist_time').css('display', $('.am_list_block').width() <= 170 ?  'none' : 'block');
 });
 
+//避免首次进入一直loading
+$('.am_img_bg').removeClass('am_img_bg');
+$(this).find('.am_img').addClass('bounceIn');
+
 //@首页 图片滑动效果
 $(".am_list_block").on('mouseover', function(){
     $('.am_img_bg').removeClass('am_img_bg');
