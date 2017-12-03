@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from .models import Category, Cake1
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
+from django.core import serializers
 
 
 # Create your views here.分页
@@ -13,7 +15,7 @@ def category(request):
     # cake = categorys.cake1_set.all()
     # w = get_list_or_404(Cake1, category_id=categorys[0].id)
     print(222222)
-    paginator = Paginator(allcake, 5)
+    paginator = Paginator(allcake, 15)
     page = request.GET.get('page')
     # if page:
     #     cake_list = paginator.page(page).object_list
@@ -27,7 +29,40 @@ def category(request):
     except EmptyPage:
         customer = paginator.page(paginator.num_pages)
 
+    data = serializers.serialize("json", allcake)
+
+    print(JsonResponse(data, safe=False))
     return render(request, "cake/cake.html", {"categorys": categorys, "allcake": customer})
+    # return JsonResponse(data, safe=False)
+
+
+def category_json(request):
+    categorys = Category.objects.all()
+    allcake = Cake1.objects.all()
+    # t = Category.objects.get(id=1)
+    # cake = categorys.cake1_set.all()
+    # w = get_list_or_404(Cake1, category_id=categorys[0].id)
+    print(222222)
+    paginator = Paginator(allcake, 15)
+    page = request.GET.get('page')
+    # if page:
+    #     cake_list = paginator.page(page).object_list
+    # else:
+    #     cake_list = paginator.page(1).object_list
+
+    try:
+        customer = paginator.page(page)
+    except PageNotAnInteger:
+        customer = paginator.page(1)
+    except EmptyPage:
+        customer = paginator.page(paginator.num_pages)
+
+    data = serializers.serialize("json", allcake)
+
+    print(JsonResponse(data, safe=False))
+    # return render(request, "cake/cake.html", {"categorys": categorys, "allcake": customer})
+    return JsonResponse(data, safe=False)
+
 
 
 def cakeList(request, category_id):

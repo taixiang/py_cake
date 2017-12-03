@@ -6,13 +6,13 @@
 
 
 <div class="am-g am-imglist">
-    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+    <ul id="cake_content" data-am-widget="gallery" class="am-gallery am-avg-sm-2
   am-avg-md-3 am-avg-lg-6 am-gallery-default">
 
         {% for cake in allcake %}
         <li>
             <div class="am-gallery-item am_list_block">
-                <a href="{% url 'cake:detail' cake.id %}" class="am_img_bg" >
+                <a href="{% url 'cake:detail' cake.id %}" class="am_img_bg">
                     <img class="am_img animated" src="{% static 'img/loading.gif' %}"
                          data-original="/static/img/{{cake.img}}"
                          alt="满街香蛋糕欢迎您"/>
@@ -32,6 +32,10 @@
     </ul>
 </div>
 
+<div id="moreCake" class="am_news_load">
+      <span style="color:#333">
+          <i class="am-icon-spinner am-icon-spin"></i> 查看更多</span></div>
+
 
 <ul class="am-pagination">
 
@@ -40,26 +44,86 @@
         <a href="?page={{ allcake.previous_page_number }}">&laquo;</a>
     </li>
     {% else %}
-        <li class="am-disabled"><a href="#">&laquo;</a></li>
+    <li class="am-disabled"><a href="#">&laquo;</a></li>
     {% endif %}
 
     {% for pg in allcake.paginator.page_range %}
     {% if allcake.number == pg %}
-        <li class="am-active"><a href="?page={{ pg }}">{{pg}}</a></li>
+    <li class="am-active"><a href="?page={{ pg }}">{{pg}}</a></li>
     {% else %}
-        <li><a href="?page={{ pg }}">{{pg}}</a></li>
+    <li><a href="?page={{ pg }}">{{pg}}</a></li>
     {% endif %}
     {% endfor %}
 
     {% if allcake.has_next %}
-        <li>
-            <a href="?page={{ allcake.next_page_number }}" >&raquo;</a>
-        </li>
+    <li>
+        <a href="?page={{ allcake.next_page_number }}">&raquo;</a>
+    </li>
     {% else %}
-        <li class="am-disabled"><a href="#">&raquo;</a></li>
+    <li class="am-disabled"><a href="#">&raquo;</a></li>
     {% endif %}
 
 </ul>
+
+
+<!--<script src="{% static 'js/petshow.js' %}"></script>-->
+
+<script>
+
+    $("#moreCake").click(function(){
+        console.log("========")
+
+        $.ajax({
+        type:'GET',
+        url:'{% url 'cake:category_json' %}',
+        dataType:'json',
+        success:function(response, status){
+            console.log(response);
+            console.log(status);
+            var data = JSON.parse(response)
+            console.log(data);
+
+            $.each(data,function(i,item){
+                console.log(i)
+                console.log(item.fields.img)
+                var t = item.fields.img.replace(/\//g,"//")
+                var imgUrl = "/static/img/" + item.fields.img
+                console.log(t)
+                console.log(imgUrl)
+
+                $("#cake_content").append("<li>"
+                    + "<div class='am-gallery-item am_list_block'>"
+                    + "<a href='{% url 'cake:detail' "14" %}' class='am_img_bg' >"
+                    + "<img class='am_img animated' src='{% static 'img/loading.gif' %}' "
+                    + "data-original="+imgUrl +" "
+                    + "alt='满街香蛋糕欢迎您'/> "
+                    + "</a>"
+                )
+
+                //@懒加载
+                $("img.am_img").lazyload();
+                  $("a.am_img_bg").lazyload({
+                  effect : 'fadeIn'
+                });
+
+            })
+
+
+
+
+
+
+        }
+
+
+    })
+
+
+
+    })
+
+
+</script>
 
 
 <script src="{% static 'js/petshow.js' %}"></script>
