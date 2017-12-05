@@ -15,16 +15,26 @@
         <div class="am_tuya_content_l">
             <div class="am_albums">
                 <!--<p style="text-align:center">-->
-                    <img src="/static/img/{{detail.img}}" width="100%" height="100%" alt=""/>
+                <img src="/static/img/{{detail.img}}" width="100%" height="100%" alt=""/>
                 <!--</p>-->
             </div>
             <div class="am_tuya_more">
-                                <div class="am_tuya_oneword">价格：{{detail.price}}</div>
+                <div class="am_tuya_oneword">价格：{{detail.price}}</div>
 
                 <div class="am_tuya_comment_text">{{detail.cake_desc|linebreaks}}</div>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+
+    $(".ztlb_nr_blockc_r_title").click(function(){
+        history.go(-1);
+    })
+
+
+</script>
 
 {% endblock %}

@@ -70,8 +70,6 @@
 
 <script>
 
-    var baseurl = "http://127.0.0.1:8000/cake/";
-
     $("#moreCake").click(function(){
         console.log("========")
 
@@ -93,9 +91,12 @@
                 console.log(t)
                 console.log(imgUrl)
 
+                var baseurl = "{% url 'cake:detail' 0 %}".replace('0', item.pk)
+
+
                 $("#cake_content").append("<li>"
                     + "<div class='am-gallery-item am_list_block'>"
-                    + "<a href= "+baseurl+item.pk+"/detail/" + "  class='am_img_bg' >"
+                    + "<a href= "+baseurl + "  class='am_img_bg' >"
                     + "<img class='am_img animated' src='{% static 'img/loading.gif' %}' "
                     + "data-original="+imgUrl +" "
                     + "alt='满街香蛋糕欢迎您'/> "
