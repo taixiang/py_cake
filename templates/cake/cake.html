@@ -70,25 +70,24 @@
 
 <script>
 
+   var page = 2
     $("#moreCake").click(function(){
         console.log("========")
 
         $.ajax({
         type:'GET',
-        url:'{% url 'cake:category_json' %}',
+        url:'{% url 'cake:category_json' %}?page='+page,
         dataType:'json',
         success:function(response, status){
             console.log(response);
             console.log(status);
             var data = JSON.parse(response)
             console.log(data);
-
-            $.each(data,function(i,item){
+            page = data.page+1;
+            $.each(data.data,function(i,item){
                 console.log(i)
-                console.log(item.fields.img)
-                var t = item.fields.img.replace(/\//g,"//")
                 var imgUrl = "/static/img/" + item.fields.img
-                console.log(t)
+
                 console.log(imgUrl)
 
                 var baseurl = "{% url 'cake:detail' 0 %}".replace('0', item.pk)

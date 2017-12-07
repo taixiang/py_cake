@@ -15,16 +15,18 @@ def category(request):
     # cake = categorys.cake1_set.all()
     # w = get_list_or_404(Cake1, category_id=categorys[0].id)
     print(222222)
-    paginator = Paginator(allcake, 15)
+    paginator = Paginator(allcake, 1)
     page = request.GET.get('page')
     # if page:
     #     cake_list = paginator.page(page).object_list
     # else:
     #     cake_list = paginator.page(1).object_list
 
+
     try:
         customer = paginator.page(page)
     except PageNotAnInteger:
+        print("==================")
         customer = paginator.page(1)
     except EmptyPage:
         customer = paginator.page(paginator.num_pages)
@@ -43,7 +45,7 @@ def category_json(request):
     # cake = categorys.cake1_set.all()
     # w = get_list_or_404(Cake1, category_id=categorys[0].id)
     print(222222)
-    paginator = Paginator(allcake, 15)
+    paginator = Paginator(allcake, 1)
     page = request.GET.get('page')
     # if page:
     #     cake_list = paginator.page(page).object_list
@@ -57,12 +59,14 @@ def category_json(request):
     except EmptyPage:
         customer = paginator.page(paginator.num_pages)
 
-    data = serializers.serialize("json", allcake)
+    customer.next_ = "11111"
 
-    print(JsonResponse(data, safe=False))
+    data = serializers.serialize("json", customer)
+    data = "{ \"data\":" + data + ",\"page\":" + page + " }"
+    print(data)
+    print("===================================")
     # return render(request, "cake/cake.html", {"categorys": categorys, "allcake": customer})
     return JsonResponse(data, safe=False)
-
 
 
 def cakeList(request, category_id):
