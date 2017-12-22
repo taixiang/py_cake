@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'polls',
     'blog',
     'cake',
+    'spider',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mysecondsql',
         'USER': 'root',
-        'PASSWORD': '11111111',
+        'PASSWORD': '111111',
         'HOST': 'localhost',
         'PORT': '3306',
     }
