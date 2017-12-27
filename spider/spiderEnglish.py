@@ -1,6 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
 
+import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+django.setup()
+from spider.models import learn
+
+learnEn = learn.objects.get_or_create(time="12-27")
+
+
+
 
 response = requests.get("http://m.chinavoa.com/51voa/")
 soup = BeautifulSoup(response.content, "html5lib")
