@@ -20,6 +20,7 @@ from cake import views
 urlpatterns = [
     url(r'^cake/', include('cake.urls', namespace='cake', app_name='cake')),
     url(r'^admin/', admin.site.urls),
+    url(r'^spider/', include('spider.urls', namespace='spider', app_name='spider')),
 ]
 handler403 = views.page_not_find
 handler404 = views.page_not_find
