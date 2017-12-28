@@ -14,8 +14,11 @@ class article(models.Model):
 
 class learn(models.Model):
     title = models.CharField("标题", max_length=200, blank=True)
-    time = models.CharField("时间", max_length=50, blank=True)
+    time = models.DateField("时间", blank=True)
     content = models.TextField("内容", blank=True)
+
+    class Meta:
+        ordering = ("time",)
 
     def __str__(self):
         return self.title
