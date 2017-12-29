@@ -21,24 +21,21 @@ def spiderEn():
 
     for index, li in enumerate(lilist):
         if "VOA慢速英语" in li.a.contents[1]:
-            time1 = li.a.contents[0].string
+            time1 = str(datetime.datetime.now().year) +"-"+li.a.contents[0].string
             title = li.a.contents[1][8:]
-            lLast = learn.objects.first()
-            if (lLast == None) or time1 != lLast.time:
-                print(11111)
-                learnEn = learn()
-                learnEn.title = title
-                learnEn.time = str(datetime.datetime.now().year) +"-"+time1
+
+            learnEn, hasEn = learn.objects.get_or_create(time=time1, title=title)
+            if hasEn == 1:
+                learnEn.url = li.a.get("href")
                 detailRep = requests.get(li.a.get("href"))
                 detailSoup = BeautifulSoup(detailRep.content, "html5lib")
                 plist = detailSoup.find("div", class_="neirong").find_all("p")
+                learnEn.audioUrl = detailSoup.find("audio", class_="player").get("m-src")
                 en_content = ""
                 for p in plist:
                     if p.string:
                         en_content = en_content + p.string + "\n"
                 learnEn.content = en_content
                 learnEn.save()
-            else:
-                return
 
 spiderEn()

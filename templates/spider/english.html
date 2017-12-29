@@ -1,0 +1,30 @@
+{% extends "spider/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="am-tabs-bd">
+    <div data-tab-panel-0 class="am-tab-panel am-active">
+        <div class="am-list-news-bd am_news_list_all">
+            <ul class="am-list">
+                {% for item in enList %}
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left am_list_li">
+                    <a style="color:#333" href="{% url 'spider:detail' item.id %}">
+                        <div>{{item.title}}</div>
+                        <div><span style="float:right">{{item.time | date:"Y-m-d"}}</span></div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div id="moreCake" class="am_news_load">
+      <span style="color:#333">
+          <i class="am-icon-spinner am-icon-spin"></i> 查看更多</span></div>
+
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
