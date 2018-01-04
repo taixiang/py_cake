@@ -9,7 +9,7 @@ from django.core import serializers
 
 def enList(request):
     enList = learn.objects.all()
-    paginator = Paginator(enList, 10)
+    paginator = Paginator(enList, 2)
     page = request.GET.get('page')
     try:
         customer = paginator.page(page)
@@ -18,12 +18,17 @@ def enList(request):
     except EmptyPage:
         customer = paginator.page(paginator.num_pages)
 
-    return render(request, "spider/english.html", {"enList": customer})
+    if customer.has_next():
+        has_next = True
+    else:
+        has_next = False
+
+    return render(request, "spider/english.html", {"enList": customer, "has_next": has_next})
 
 
-def enList_json(request):
+def more_list(request):
     enList = learn.objects.all()
-    paginator = Paginator(enList, 10)
+    paginator = Paginator(enList, 2)
     page = request.GET.get('page')
     try:
         customer = paginator.page(page)
@@ -31,9 +36,12 @@ def enList_json(request):
         customer = paginator.page(1)
     except EmptyPage:
         customer = paginator.page(paginator.num_pages)
-
     data = serializers.serialize("json", customer)
-    data = "{ \"data\":" + data + ",\"page\":" + page + " }"
+    if customer.has_next():
+        data = "{ \"data\":" + data + ",\"page\":" + page + ",\"next\":\"1\" }"
+    else:
+        data = "{ \"data\":" + data + ",\"page\":" + page + ",\"next\":\"\" }"
+
     return JsonResponse(data, safe=False)
 
 

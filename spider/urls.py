@@ -4,5 +4,5 @@ from spider import views
 urlpatterns = [
     url(r'^$', views.enList, name='enList'),
     url(r'(?P<enid>\d+)/detail/$', views.enDetail, name='detail'),
-    url(r'^enList_json/$', views.enList_json, name='enList_json'),
+    url(r'^more_list/$', views.more_list, name='more_list'),
 ]
