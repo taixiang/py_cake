@@ -1,32 +1,42 @@
 import requests
-from bs4 import BeautifulSoup
-
-import os
-import django
 import time, datetime
 import json, threading
 import webbrowser
 import urllib.parse
+from django.core import serializers
+from spider import methods
+
 
 #
-# def getData():
-#     resptext = requests.get('http://htpmsg.jiecaojingxuan.com/msg/current', timeout=5).text
-#     resptext_dict = json.loads(resptext)
-#     print(resptext_dict)
-#     # f = open("./cddh", "a")
-#     # f.write(resptext + "\n")
-#     # f.close()
-#     global timer
-#     timer = threading.Timer(1.0, getData)
-#     timer.start()
-#
-#
-# if __name__ == "__main__":
-#     timer = threading.Timer(1.0, getData)
-#     timer.start()
-
 def getData():
-    result = urllib.parse.quote("“白寿”在中国古代指的是多少岁")
-    webbrowser.open('https://baidu.com/s?wd='+result)
+    # http://www.mocky.io/v2/5a56c7242e0000d70411fead  http://htpmsg.jiecaojingxuan.com/msg/current  http://www.mocky.io/v2/5a56f5df2e0000690e11ff1f
+    count = 0
+    while True:
+        time.sleep(0.5)
+        resptext = requests.get('http://htpmsg.jiecaojingxuan.com/msg/current', timeout=5).text
+        result = json.loads(resptext)
+        print(result)
+        if "data" in result.keys() and "correctOption" not in result["data"]["event"].keys() and count < 1:
+            question = result["data"]["event"]["desc"].split(".")[1]
+            choices = result["data"]["event"]["options"].strip("[").strip("]").replace('"', "").split(",")
+            print(choices)
+            count += 1
+            # methods.run_algorithm(0, question, choices)
+            methods.run_algorithm(2, question, choices)
+        elif "data" not in result.keys():
+            count = 0
+        f = open("./cddh2", "a")
+        f.write(resptext + "\n")
+        f.close()
 
-getData()
+
+
+if __name__ == "__main__":
+    # getData()
+    getData()
+
+    # def getData():
+    #     result = urllib.parse.quote("“白寿”在中国古代指的是多少岁")
+    #     webbrowser.open('https://baidu.com/s?wd='+result)
+    #
+    # getData()

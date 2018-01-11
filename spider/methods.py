@@ -78,8 +78,9 @@ def run_algorithm(al_num, question, choices):
         count_base(question, choices)
 
 if __name__ == '__main__':
-    question = '英国之前，第一个被冠以“日不落帝国”称号的国家?'
-    choices = ['西班牙', '葡萄牙', '中国']
-    run_algorithm(2, question, choices)
+    question = '哪种动物的乳汁最适合替代人类母乳？'
+    choices = ['牛', '驴', '羊']
+    print(type(choices))
+    run_algorithm(1, question, choices)
 
 
