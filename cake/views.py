@@ -1,8 +1,10 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render
 from .models import Category, Cake1
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.core import serializers
+from rest_framework import viewsets
+from cake.serializer import CategorySerializer
 
 
 # Create your views here.分页
@@ -98,3 +100,8 @@ def cakeDetail(request, cake_id):
 
 def page_not_find(request):
     return render(request, "cake/404.html")
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer

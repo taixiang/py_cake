@@ -16,11 +16,19 @@ Including another URLconf
 from django.conf.urls import url, include, handler403, handler404, handler500
 from django.contrib import admin
 from cake import views
+from rest_framework import routers
+
+router = routers.DefaultRouter
+router.register(r'category', views.CategoryViewSet)
 
 urlpatterns = [
     url(r'^cake/', include('cake.urls', namespace='cake', app_name='cake')),
     url(r'^admin/', admin.site.urls),
     url(r'^spider/', include('spider.urls', namespace='spider', app_name='spider')),
+    url(r'^blog/', include('blog.urls', namespace='blog', app_name='blog')),
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 ]
 handler403 = views.page_not_find
 handler404 = views.page_not_find

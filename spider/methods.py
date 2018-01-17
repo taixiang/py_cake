@@ -9,6 +9,9 @@ import webbrowser
 
 def open_webbrowser(question):
     webbrowser.open('https://baidu.com/s?wd=' + question)
+    webbrowser.open('https://www.sogou.com/web?query=' + question)
+
+
 
 def open_webbrowser_count(question,choices):
     print('\n-- 方法2： 题目+选项搜索结果计数法 --\n')

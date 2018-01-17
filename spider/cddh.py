@@ -13,21 +13,26 @@ def getData():
     count = 0
     while True:
         time.sleep(0.5)
-        resptext = requests.get('http://htpmsg.jiecaojingxuan.com/msg/current', timeout=5).text
-        result = json.loads(resptext)
-        print(result)
-        if "data" in result.keys() and "correctOption" not in result["data"]["event"].keys() and count < 1:
-            question = result["data"]["event"]["desc"].split(".")[1]
-            choices = result["data"]["event"]["options"].strip("[").strip("]").replace('"', "").split(",")
-            print(choices)
-            count += 1
-            # methods.run_algorithm(0, question, choices)
-            methods.run_algorithm(2, question, choices)
-        elif "data" not in result.keys():
-            count = 0
-        f = open("./cddh2", "a")
-        f.write(resptext + "\n")
-        f.close()
+        resptext = requests.get('http://htpmsg.jiecaojingxuan.com/msg/current', timeout=5)
+        if resptext.status_code == 200:
+            result = json.loads(resptext.text)
+            print(result)
+            if "data" in result.keys() and "correctOption" not in result["data"]["event"].keys() and count < 1:
+                question = result["data"]["event"]["desc"].split(".")[1]
+                choices = result["data"]["event"]["options"].strip("[").strip("]").replace('"', "").split(",")
+                print(choices)
+                count += 1
+                t1 = threading.Thread(methods.run_algorithm(0, question, choices))
+                t2 = threading.Thread(methods.run_algorithm(1, question, choices))
+                t3 = threading.Thread(methods.run_algorithm(2, question, choices))
+                t1.start()
+                t2.start()
+                t3.start()
+            elif "data" not in result.keys():
+                count = 0
+            f = open("./cddh3", "a")
+            f.write(resptext.text + "\n")
+            f.close()
 
 
 
