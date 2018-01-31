@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
+    pub_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = Category
-        fields = ('category', 'pub_time', 'order')
+        fields = ('id', 'category', 'pub_time', 'order')
