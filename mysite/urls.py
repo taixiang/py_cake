@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^spider/', include('spider.urls', namespace='spider', app_name='spider')),
     url(r'^blog/', include('blog.urls', namespace='blog', app_name='blog')),
-    url(r'^api/', include(router.urls)),
+    # url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ]

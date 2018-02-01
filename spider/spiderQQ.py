@@ -61,7 +61,7 @@ while True:
         divs = selector.xpath('//*[@id="msgList"]/li/div[3]')
 
         #这里使用 a 表示内容可以连续不清空写入
-        with open('biao_qq_word.txt', 'a', encoding='utf-8') as f:
+        with open('qq_zhu_word.txt', 'a', encoding='utf-8') as f:
             for div in divs:
                 qq_name = div.xpath('./div[2]/a/text()')
                 qq_content = div.xpath('./div[2]/pre/text()')

@@ -35,7 +35,7 @@ def create_word_cloud(filename):
 
         # 设置字体最大值
        max_font_size=100,
-     # 设置有多少种随机生成状态，即有多少种配色方案
+        # 设置有多少种随机生成状态，即有多少种配色方案
        random_state=30,
     )
 
@@ -44,7 +44,7 @@ def create_word_cloud(filename):
     plt.imshow(myword)
     plt.axis("off")
     plt.show()
-    wc.to_file('huang_py_book3.png')  # 把词云保存下
+    wc.to_file('tai_sina.png')  # 把词云保存下
 
 if __name__ == '__main__':
-    create_word_cloud('huang_qq_word')
+    create_word_cloud('sina_word')
