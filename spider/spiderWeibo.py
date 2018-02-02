@@ -11,14 +11,14 @@ import importlib
 
 friend = ''  # 朋友的QQ号，朋友的空间要求允许你能访问
 user = '467220125@qq.com'  # 你的QQ号
-pw = ''  # 你的QQ密码
+pw = '467220125tx'  # 你的QQ密码
 
 # 获取浏览器驱动
 driver = webdriver.Chrome()
 
 # 浏览器窗口最大化
 driver.maximize_window()
-
+#
 # 浏览器地址定向为登陆页面
 driver.get("https://weibo.com/")
 
@@ -36,8 +36,10 @@ driver.find_element_by_class_name("W_btn_a").click()
 # 让webdriver操纵当前页
 driver.switch_to.default_content()
 
+time.sleep(5)
+
 # 跳到说说的url, friend你可以任意改成你想访问的空间
-driver.get("https://weibo.com/esportsht?profile_ftype=1&is_all=1#_0")
+driver.get("https://weibo.com/imbatv2014?profile_ftype=1&is_all=1#_0")
 
 next_num = 0  # 初始“下一页”的id
 while True:
@@ -59,17 +61,32 @@ while True:
 
     print(divs[1].xpath('.//div[@class="WB_feed_detail clearfix"]')[0].xpath('./div')[2])
 
-    # 这里使用 a 表示内容可以连续不清空写入
-    with open('sina_haitao_word.txt', 'a', encoding='utf-8') as f:
+    # # 这里使用 a 表示内容可以连续不清空写入 我的
+    # with open('sina_haitao_word.txt', 'a', encoding='utf-8') as f:
+    #     for div in range(1, len(divs) - 1):
+    #         sina_div = divs[div].xpath('.//div[@class="WB_feed_detail clearfix"]')[0].xpath('./div')[2]
+    #         sina_name = sina_div.xpath('./div')[0].xpath('./a/text()')[0]
+    #         sina_content = sina_div.xpath('./div')[2].xpath('./text()')[0].strip()
+    #         sina_time = sina_div.xpath('./div')[1].xpath('./a')[0].xpath('./text()')[0]
+    #         print(sina_time, sina_content)
+    #         if '2017' in sina_time:
+    #             break
+    #         f.write(sina_content+"\n")
+
+    # 这里使用 a 表示内容可以连续不清空写入 other
+    with open('sina_imbatv_word.txt', 'a', encoding='utf-8') as f:
         for div in range(1, len(divs) - 1):
             sina_div = divs[div].xpath('.//div[@class="WB_feed_detail clearfix"]')[0].xpath('./div')[2]
-            sina_name = sina_div.xpath('./div')[0].xpath('./a/text()')[0]
-            sina_content = sina_div.xpath('./div')[2].xpath('./text()')[0].strip()
-            sina_time = sina_div.xpath('./div')[1].xpath('./a')[0].xpath('./text()')[0]
-            print(sina_time, sina_content)
-            if '2017' in sina_time:
-                break
-            f.write(sina_content+"\n")
+            if len(sina_div.xpath('./div')[0].xpath('./a/text()')) > 0:
+                sina_name = sina_div.xpath('./div')[0].xpath('./a/text()')[0]
+                sina_content = sina_div.xpath('./div')[2].xpath('./text()')[0].strip()
+                sina_time = sina_div.xpath('./div')[1].xpath('./a')[0].xpath('./text()')[0]
+                print(sina_time, sina_content)
+                if '2017' in sina_time:
+                    f.write(sina_content + "\n")
+                if '2016' in sina_time:
+                    break
+
 
     # # 当已经到了尾页，“下一页”这个按钮就没有id了，可以结束了
     if driver.page_source.find('page next S_txt1 S_line1') == -1:

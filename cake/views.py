@@ -111,6 +111,7 @@ class CategoryView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+
 class CakeApiView(generics.ListAPIView):
     serializer_class = CakeSerializer
     queryset = Cake1.objects.all()
