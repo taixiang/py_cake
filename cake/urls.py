@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'(?P<cake_id>\d+)/detail/$', views.cakeDetail, name='detail'),
     url(r'^cakeapi/$', views.CakeApiView.as_view(), name='cakeapi'),
     url(r'^cateapi/$', views.CategoryView.as_view(), name='cateapi'),
+    url(r'^admin/$', views.cakeLogin, name='cake_admin'),
+    url(r'^list/$', views.cakeAdminList, name='cake_list'),
 ]
 handler403 = views.page_not_find
 handler404 = views.page_not_find

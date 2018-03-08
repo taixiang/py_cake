@@ -31,7 +31,7 @@ def create_word_cloud(filename):
          # 这种字体都在电脑字体中，一般路径
        font_path='C:\Windows\Fonts\simfang.ttf',
        height= 1200,
-       width= 1600,
+       width= 2000,
 
         # 设置字体最大值
        max_font_size=100,
@@ -44,7 +44,7 @@ def create_word_cloud(filename):
     plt.imshow(myword)
     plt.axis("off")
     plt.show()
-    wc.to_file('tai_sina.png')  # 把词云保存下
+    wc.to_file('sina_dota3.png')  # 把词云保存下
 
 if __name__ == '__main__':
-    create_word_cloud('sina_word')
+    create_word_cloud('sina_dota1_word')

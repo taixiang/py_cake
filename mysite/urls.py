@@ -20,13 +20,14 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'category', views.CategoryViewSet)
+router.register(r'cakelist', views.CakeListViewSet)
 
 urlpatterns = [
     url(r'^cake/', include('cake.urls', namespace='cake', app_name='cake')),
     url(r'^admin/', admin.site.urls),
     url(r'^spider/', include('spider.urls', namespace='spider', app_name='spider')),
     url(r'^blog/', include('blog.urls', namespace='blog', app_name='blog')),
-    # url(r'^api/', include(router.urls)),
+    url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ]

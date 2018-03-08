@@ -39,7 +39,7 @@ driver.switch_to.default_content()
 time.sleep(5)
 
 # 跳到说说的url, friend你可以任意改成你想访问的空间
-driver.get("https://weibo.com/imbatv2014?profile_ftype=1&is_all=1#_0")
+driver.get("https://weibo.com/cuplmaster?is_search=0&visible=0&is_all=1&is_tag=0&profile_ftype=1&page=68#feedtop")
 
 next_num = 0  # 初始“下一页”的id
 while True:
@@ -74,7 +74,7 @@ while True:
     #         f.write(sina_content+"\n")
 
     # 这里使用 a 表示内容可以连续不清空写入 other
-    with open('sina_imbatv_word.txt', 'a', encoding='utf-8') as f:
+    with open('sina_dota1_word.txt', 'a', encoding='utf-8') as f:
         for div in range(1, len(divs) - 1):
             sina_div = divs[div].xpath('.//div[@class="WB_feed_detail clearfix"]')[0].xpath('./div')[2]
             if len(sina_div.xpath('./div')[0].xpath('./a/text()')) > 0:

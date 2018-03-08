@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from django.core import serializers
 from rest_framework import viewsets, generics
 from cake.serializer import CategorySerializer, CakeSerializer
+from django.contrib.auth.models import User
+from rest_framework.response import Response
 
 
 # Create your views here.分页
@@ -102,9 +104,27 @@ def page_not_find(request):
     return render(request, "cake/404.html")
 
 
+# 后台登录
+def cakeLogin(request):
+    if request.POST:
+        # name = request.POST['user_name']
+        # print(name)
+        print(22222)
+    return render(request, "cake/login.html")
+
+
+def cakeAdminList(request):
+    return render(request, "cake/adminlist.html")
+
+
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+class CakeListViewSet(viewsets.ModelViewSet):
+    queryset = Cake1.objects.all()
+    serializer_class = CakeSerializer
 
 
 class CategoryView(generics.ListAPIView):
