@@ -21,6 +21,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'category', views.CategoryViewSet)
 router.register(r'cakelist', views.CakeListViewSet)
+router.register(r'detail', views.DetailViewSet, base_name='detail')
 
 urlpatterns = [
     url(r'^cake/', include('cake.urls', namespace='cake', app_name='cake')),

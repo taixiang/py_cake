@@ -3,10 +3,12 @@ from .models import Category, Cake1
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.core import serializers
-from rest_framework import viewsets, generics
-from cake.serializer import CategorySerializer, CakeSerializer
+from rest_framework import viewsets, generics, renderers
+from cake.serializer import CategorySerializer, CakeSerializer, ResultPagination, DetailSerializer
 from django.contrib.auth.models import User
 from rest_framework.response import Response
+from rest_framework.decorators import detail_route
+from collections import OrderedDict
 
 
 # Create your views here.分页
@@ -123,8 +125,51 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class CakeListViewSet(viewsets.ModelViewSet):
+    pagination_class = ResultPagination
     queryset = Cake1.objects.all()
     serializer_class = CakeSerializer
+
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return Response(OrderedDict([
+                    ('code', 200),
+                    ('count', self.paginator.page.paginator.count),
+                    ('next', self.paginator.get_next_link()),
+                    ('previous', self.paginator.get_previous_link()),
+                    ('results', serializer.data)
+                ]))
+
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        except:
+            return Response(OrderedDict([
+                ('code', 500),
+                ('results', None)
+            ]))
+
+
+class DetailViewSet(viewsets.ModelViewSet):
+    queryset = Cake1.objects.all()
+    serializer_class = DetailSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            pkid = kwargs.get('pk')
+            data = Cake1.objects.get(id=pkid)
+            serializer = self.get_serializer(data)
+            return Response(OrderedDict([
+                ('code', 200),
+                ('results', serializer.data)
+            ]))
+        except:
+            return Response(OrderedDict([
+                ('code', 500),
+                ('results', None)
+            ]))
 
 
 class CategoryView(generics.ListAPIView):
