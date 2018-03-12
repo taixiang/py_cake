@@ -31,7 +31,7 @@ class Cake1(models.Model):
     cake_desc = models.TextField("文本", null=True, blank=True, help_text="z这是文本信息")
     order = models.IntegerField("权重", default=0)
     pub_time = models.DateTimeField("时间", default=timezone.now)
-    category_id = models.ManyToManyField("Category", related_name="cake_post", verbose_name="类别")
+    category_id = models.ManyToManyField("Category", related_name="cake_post", verbose_name="类别", blank=True)
 
     class Meta:
         ordering = ("pub_time",)
