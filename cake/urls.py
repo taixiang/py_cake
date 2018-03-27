@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^cateapi/$', views.CategoryView.as_view(), name='cateapi'),
     url(r'^admin/$', views.cakeLogin, name='cake_admin'),
     url(r'^list/$', views.cakeAdminList, name='cake_list'),
+    url(r'^jsbridge/$', views.jsBridge, name='jsBridge'),
 ]
 handler403 = views.page_not_find
 handler404 = views.page_not_find

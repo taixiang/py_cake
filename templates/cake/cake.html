@@ -34,8 +34,15 @@
 
 <div id="moreCake" class="am_news_load">
       <span style="color:#333">
-          <i class="am-icon-spinner am-icon-spin"></i> 查看更多</span></div>
+          <i class="am-icon-spinner am-icon-spin"></i> 查看更多</span>
+</div>
 
+<div id="test1">
+    666666666666
+</div>
+<div id="test2">
+    111111
+</div>
 
 <ul class="am-pagination">
 
@@ -70,59 +77,70 @@
 
 <script>
 
+
    var page = 2
     $("#moreCake").click(function(){
         console.log("========")
 
-        $.ajax({
-        type:'GET',
-        url:'{% url 'cake:category_json' %}?page='+page,
-        dataType:'json',
-        success:function(response, status){
-            console.log(response);
-            console.log(status);
-            var data = JSON.parse(response)
-            console.log(data);
-            page = data.page+1;
-            $.each(data.data,function(i,item){
-                console.log(i)
-                var imgUrl = "/static/img/" + item.fields.img
+        $("#moreCake").text("000000");
+        //发送消息给java代码
+           <!--var data = '发送消息给java代码全局接收';-->
+           <!--//第一个参数要发送的数据 第二个参数js在被回调后具体执行方法，responseData为java层回传数据-->
+           <!--window.WebViewJavascriptBridge.send(-->
+               <!--data-->
+               <!--, function(responseData) {-->
+                  <!--$("#moreCake").text('来自Java的回传数据： ' +responseData);-->
 
-                console.log(imgUrl)
+               <!--}-->
+           <!--);-->
 
-                var baseurl = "{% url 'cake:detail' 0 %}".replace('0', item.pk)
+           var data='发送消息给java代码指定接收';
+           window.WebViewJavascriptBridge.callHandler(
+               'submitFromWeb'
+               ,data
+               , function(responseData) {
+                  $("#moreCake").text('来自Java的回传数据： ' +responseData);
+               }
+           );
 
+           }
+    )
 
-                $("#cake_content").append("<li>"
-                    + "<div class='am-gallery-item am_list_block'>"
-                    + "<a href= "+baseurl + "  class='am_img_bg' >"
-                    + "<img class='am_img animated' src='{% static 'img/loading.gif' %}' "
-                    + "data-original="+imgUrl +" "
-                    + "alt='满街香蛋糕欢迎您'/> "
-                    + "</a>"
-                )
+       //注册事件监听
+       function connectWebViewJavascriptBridge(callback) {
+           if (window.WebViewJavascriptBridge) {
+           $("#test1").text("qqqqqq")
+               callback(WebViewJavascriptBridge)
+           } else {
 
-                //@懒加载
-                $("img.am_img").lazyload();
-                  $("a.am_img_bg").lazyload({
-                  effect : 'fadeIn'
-                });
+               document.addEventListener(
+                   'WebViewJavascriptBridgeReady'
+                   , function() {
+                       callback(WebViewJavascriptBridge)
 
-            })
+                   },
+                   false
+               );
+           }
+       }
+       //注册回调函数，第一次连接时调用 初始化函数
+       connectWebViewJavascriptBridge(function(bridge) {
 
+       $("#test1").text("44444")
 
+           bridge.init(function(message, responseCallback) {
 
+               $("#test1").text('默认接收收到来自Java数据： ' + message);
+               var responseData = '默认接收收到来自Java的数据，回传数据给你';
+               responseCallback(responseData);
+           });
 
-
-
-        }
-
-
-    })
-
-
-
-    })
+           bridge.registerHandler("functionInJs", function(data, responseCallback) {
+               $("#test2").text('指定接收收到来自Java数据： ' + data);
+               var responseData = '指定接收收到来自Java的数据，回传数据给你';
+               responseCallback(responseData);
+           });
+       })
 
 
 </script>

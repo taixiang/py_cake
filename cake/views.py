@@ -102,6 +102,10 @@ def cakeDetail(request, cake_id):
     return render(request, "cake/detail.html", {"categorys": categorys, "detail": cake_detail})
 
 
+def jsBridge(request):
+    return render(request, "cake/jsbridge.html")
+
+
 def page_not_find(request):
     return render(request, "cake/404.html")
 
