@@ -5,10 +5,6 @@ from selenium import webdriver
 from lxml import etree
 import importlib
 
-# 这里一定要设置编码格式，防止后面写入文件时报错
-
-
-
 friend = '' # 朋友的QQ号，朋友的空间要求允许你能访问
 user = ''  # 你的QQ号
 pw = ''  # 你的QQ密码
@@ -57,8 +53,8 @@ while True:
     # 很多时候网页由多个<frame>或<iframe>组成，webdriver默认定位的是最外层的frame，
     # 所以这里需要选中一下说说所在的frame，否则找不到下面需要的网页元素
     driver.switch_to.frame("app_canvas_frame")
-    selector = etree.HTML(driver.page_source)
-    divs = selector.xpath('//*[@id="msgList"]/li/div[3]')
+    selector = etree.HTML(driver.page_source) #page_source方法可以直接返回页面源码
+    divs = selector.xpath('//*[@id="msgList"]/li/div[3]')  #根元素下面查找
 
     # 这里使用 a 表示内容可以连续不清空写入
     with open('qq_zhu_word.txt', 'a', encoding='utf-8') as f:
