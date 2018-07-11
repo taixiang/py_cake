@@ -16,6 +16,7 @@ def headImg():
     friends = itchat.get_friends(update=True)
     # itchat.get_head_img() 获取到头像二进制，并写入文件，保存每张头像
     for count, f in enumerate(friends):
+        # 根据userName获取头像
         img = itchat.get_head_img(userName=f["UserName"])
         imgFile = open("img/" + str(count) + ".jpg", "wb")
         imgFile.write(img)
@@ -111,12 +112,13 @@ def create_word_cloud(filename):
     plt.show()
     wc.to_file('signature.png')  # 把词云保存下
 
-#
+# 微信好友头像拼接
 # headImg()
 # createImg()
 
-#
+# 性别统计
 # getSex()
-#
+
+# 个性签名统计
 # getSignature()
 # create_word_cloud("sign")

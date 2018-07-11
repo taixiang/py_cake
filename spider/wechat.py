@@ -10,7 +10,7 @@ from matplotlib.font_manager import FontManager, FontProperties
 from wordcloud import WordCloud
 import jieba
 import numpy as np
-
+import re
 font = FontProperties(fname='/Library/Fonts/Songti.ttc')
 
 
@@ -78,23 +78,25 @@ def getSex():
     plt.title(u"性别分布图", fontproperties=font)
     plt.show()
 
+# 获取个性签名
 def getSignature():
     itchat.login()
     friends = itchat.get_friends(update=True)
     file = open('sign.txt', 'a', encoding='utf-8')
     for f in friends:
         signature = f["Signature"].strip().replace("emoji","").replace("span","").replace("class","")
+        re.compile("1f\d+\w*|[<>/=]")
         file.write(signature+"\n")
 
-# 生成词云
+# 生成词云图
 def create_word_cloud(filename):
     # 读取文件内容
     text = open("{}.txt".format(filename), encoding='utf-8').read()
 
+    # 注释部分采用结巴分词
     wordlist = jieba.cut(text, cut_all=True)
     wl = " ".join(wordlist)
-    image = Image.open('222.png')
-    graph = np.array(image)
+
     # 设置词云
     wc = WordCloud(
         # 设置背景颜色
@@ -102,25 +104,24 @@ def create_word_cloud(filename):
         # 设置最大显示的词云数
         max_words=2000,
         # 这种字体都在电脑字体中，window在C:\Windows\Fonts\下，mac我选的是/System/Library/Fonts/PingFang.ttc 字体
-        font_path='/System/Library/Fonts/PingFang.ttc',
+        font_path='C:\\Windows\\Fonts\\simfang.ttf',
         height=500,
         width=500,
         # 设置字体最大值
         max_font_size=100,
         # 设置有多少种随机生成状态，即有多少种配色方案
         random_state=30,
-        mask=graph
     )
 
-    myword = wc.generate(wl)  # 生成词云
+    myword = wc.generate(wl)  # 生成词云 如果用结巴分词的话，使用wl 取代 text， 生成词云图
     # 展示词云图
     plt.imshow(myword)
     plt.axis("off")
     plt.show()
     wc.to_file('sign2.png')  # 把词云保存下
 
-create_word_cloud("sign")
-# getSignature()
+# create_word_cloud("sign")
+getSignature()
 # getSex()
 # getFriends()
 # createImg()
