@@ -5,8 +5,17 @@ from io import BytesIO
 from urllib.request import urlopen
 
 
-def takeSort(elem):
-    return elem[2]
+def takeSort(enum):
+    price = enum[0]
+    if "面议" in price:
+        return 0
+    start = price.index("¥")
+    end = price.index("/")
+    new_price = price[start + 1:end]
+    return float(new_price)
+
+def takeSort2(enum):
+    return enum[2]
 
 
 def test_list(furniture):
@@ -50,25 +59,31 @@ def test_list(furniture):
     file.close()
 
 
-def getData():
+def get_data():
+    # 定义一个列表存储数据
     furniture = []
-    for num in range(1, 2):
+    # 分页数据获取
+    for num in range(1, 9):
         url = "http://www.likoujiaju.com/sell/list-66-%d.html" % num
         response = requests.get(url)
         content = BeautifulSoup(response.content, "lxml")
+        # 找到数据所在的div块
         sm_offer = content.find("div", class_="sm-offer")
         lis = sm_offer.ul.find_all("li")
-
+        # 遍历每一条数据
         for li in lis:
             price_span = li.find("span", class_="sm-offer-priceNum")
             price = price_span.get_text()
             title_div = li.find("div", class_="sm-offer-title")
             title = title_div.a.get_text()
-            furniture.append((price, title, split_price(price)))
+            photo_div = li.find("div", class_="sm-offer-photo")
+            photo = photo_div.a.img.get("src")
+            # 数组里每一项是元祖
+            furniture.append((price, title, photo))
 
-    furniture.sort(key=takeSort)
-    test_list(furniture)
-    print(furniture)
+    # furniture.sort(key=takeSort)
+    # test_list(furniture)
+    # print(furniture)
 
 
 # 处理价格，便于通过价格筛选
@@ -99,7 +114,7 @@ def write_img():
 
 
 # test_list()
-getData()
+get_data()
 # doWithStr("\n¥52100.00/套")
 # sort_list()
 # write_img()
