@@ -11,10 +11,9 @@ def get_data():
     # 定义一个列表存储数据
     furniture = []
     # 用于存放家具名，后续用于生成词频
-    file = open('furniture.txt', 'a', encoding='utf-8')
     title_all = ""
     # 分页数据获取
-    for num in range(1, 2):
+    for num in range(1, 9):
         url = "http://www.likoujiaju.com/sell/list-66-%d.html" % num
         response = requests.get(url)
         content = BeautifulSoup(response.content, "lxml")
@@ -23,13 +22,14 @@ def get_data():
         lis = sm_offer.ul.find_all("li")
         # 遍历每一条数据
         for li in lis:
+            # 价格
             price_span = li.find("span", class_="sm-offer-priceNum")
             price = price_span.get_text()
+            # 名称
             title_div = li.find("div", class_="sm-offer-title")
             title = title_div.a.get_text()
-            # 写入家具名称
-            file.write(title + "\n")
             title_all = title_all + title + " "
+            # 图片
             photo_div = li.find("div", class_="sm-offer-photo")
             photo = photo_div.a.img.get("src")
             # 详情链接
@@ -38,6 +38,7 @@ def get_data():
             furniture.append((price, title, photo, href))
     # 排序
     furniture.sort(key=take_price, reverse=True)
+    # 生成excel
     create_excel(furniture, title_all)
 
 
@@ -57,33 +58,34 @@ def take_price(enum):
 def create_excel(furniture, title_all):
     # 创建excel表格
     file = xlsxwriter.Workbook("furniture.xlsx")
-    # 创建工作表
-    sheet = file.add_worksheet("sheet1")
+    # 创建工作表1
+    sheet1 = file.add_worksheet("sheet1")
     # 定义表头
     headers = ["价格", "标题", "图片", "详情链接"]
     # 写表头
     for i, header in enumerate(headers):
         # 第一行为表头
-        sheet.write(0, i, header)
+        sheet1.write(0, i, header)
     # 设置列宽
-    sheet.set_column(0, 0, 24)
-    sheet.set_column(1, 1, 54)
-    sheet.set_column(2, 2, 34)
-    sheet.set_column(3, 3, 40)
+    sheet1.set_column(0, 0, 24)
+    sheet1.set_column(1, 1, 54)
+    sheet1.set_column(2, 2, 34)
+    sheet1.set_column(3, 3, 40)
     for row in range(len(furniture)):  # 行
         # 设置行高
-        sheet.set_row(row + 1, 180)
+        sheet1.set_row(row + 1, 180)
         for col in range(len(headers)):  # 列
             # col=2是当前列为图片，通过url去读取图片展示
             if col == 2:
                 url = furniture[row][col]
                 image_data = BytesIO(urlopen(url).read())
-                sheet.insert_image(row + 1, 2, url, {"image_data": image_data})
+                sheet1.insert_image(row + 1, 2, url, {"image_data": image_data})
             else:
-                sheet.write(row + 1, col, furniture[row][col])
+                sheet1.write(row + 1, col, furniture[row][col])
 
     # 创建工作表2，用于存放词频
     sheet2 = file.add_worksheet("sheet2")
+    # 生成词频
     word_count(title_all, sheet2)
 
     # 关闭表格
@@ -107,11 +109,10 @@ def word_count(title_all, sheet):
             word_dict[item] += 1
     # 对字典进行排序，按照数目排序
     val = sorted(word_dict.items(), key=lambda x: x[1], reverse=True)
-    # 一次写入excel
+    # 写入excel
     for row in range(len(val)):
         for col in range(0, 2):
             sheet.write(row, col, val[row][col])
 
 
 get_data()
-# word_count("furniture")
