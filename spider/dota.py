@@ -2,6 +2,7 @@ import requests, json
 from io import BytesIO
 from urllib.request import urlopen
 import xlsxwriter
+import copy
 
 
 # item 指radiant 或dire 的bans、picks列表数据
@@ -11,16 +12,10 @@ def bp(item, bp_dict, tag):
         key = bp["name"]
         # 如果这个英雄已存在，count+1
         if key in bp_dict.keys():
-            if key == "ursa":
-                print("has==========")
-                print(tag)
             bp_dict[key]["count"] = bp_dict[key]["count"] + 1
         else:  # 不存在就记录一条数据
-            if key == "ursa":
-                print("donot has==========")
-                print(tag)
             # bp.update(count=1)
-            bp_dict[key] = bp
+            bp_dict[key] = copy.deepcopy(bp)
             bp_dict[key].update(count=1)
     return bp_dict
 
