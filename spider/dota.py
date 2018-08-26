@@ -7,6 +7,8 @@ import copy
 
 # item 指radiant 或dire 的bans、picks列表数据
 def bp(item, bp_dict):
+    if item is None:
+        return
     # 遍历bans 或picks 数据
     for i, bp in enumerate(item):
         key = bp["name"]
@@ -23,29 +25,25 @@ def dota():
     bp_dict = dict()
     b_dict = dict()
     p_dict = dict()
-
-    b_win_dict = dict()
-    p_win_dict = dict()
     page = 1
     while True:
-        url = "https://www.dotamore.com/api/v1/league/matchlist?league_id=9870&page=%d&size=2" % page
+        url = "https://www.dotamore.com/api/v1/league/matchlist?league_id=9870&page=%d&size=20" % page
         response = requests.get(url)
         data = json.loads(response.text)
         page += 1
         for item in data["data"]:
-            if item["end_time"] < "2018-08-19 08:18":
+            # 比赛从8月16开始，小于这个时间生成excel，跳出循环
+            if item["end_time"] < "2018-08-16 00:00":
                 # x[0]是根据键排序，x[1]是根据值，这里的值是字典，取["count"]项排序，得到的是元祖的list
                 new_b_list = sorted(b_dict.items(), key=lambda x: x[1]["count"], reverse=True)
                 new_p_list = sorted(p_dict.items(), key=lambda x: x[1]["count"], reverse=True)
                 new_bp_list = sorted(bp_dict.items(), key=lambda x: x[1]["count"], reverse=True)
-                print(new_b_list)
-                print(new_p_list)
-                print(new_bp_list)
                 create_excel(new_b_list, new_p_list, new_bp_list)
-                # print(p_dict)
                 return
+            # ban的数据
             bp(item["radiant"]["bans"], b_dict)
             bp(item["dire"]["bans"], b_dict)
+            # pick的数据
             bp(item["radiant"]["picks"], p_dict)
             bp(item["dire"]["picks"], p_dict)
 
@@ -53,20 +51,6 @@ def dota():
             bp(item["radiant"]["picks"], bp_dict)
             bp(item["dire"]["bans"], bp_dict)
             bp(item["dire"]["picks"], bp_dict)
-
-            if item["radiant_win"] == 0:
-                if item["dire"]["team_id"] == "726228":
-                    bp(item["dire"]["bans"], b_win_dict)
-                    bp(item["dire"]["picks"], p_win_dict)
-            else:
-                if item["radiant"]["team_id"] == "726228":
-                    bp(item["radiant"]["bans"], b_win_dict)
-                    bp(item["radiant"]["picks"], p_win_dict)
-                    # print(b_dict)
-                    # print(p_dict)
-                    # print(bp_dict)
-                    # return
-
 
 def create_excel(b_list, p_list, bp_list):
     # 创建excel表格
@@ -117,7 +101,7 @@ def insert_chart(file, sheet1, bp_list, name, M, col_x, col_y):
         "data_labels": {"value": True},
     })
     chart.set_title({"name": name})  # 图表标题
-    chart.set_size({"width": 1000, "height": 400})
+    chart.set_size({"width": 2000, "height": 400})
     chart.set_x_axis({'name': '英雄'})  # x轴描述
     chart.set_y_axis({'name': '次数'})  # y轴描述
     chart.set_style(3)  # 直方图类型
