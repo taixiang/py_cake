@@ -1,16 +1,10 @@
 from PIL import Image
 
-
-
-ascii_char = list("$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ")
-# ascii_char = list("△▽◇○□▷▷◁♡♢♧♣♦♠◀▶■♀☽")
-
 width = 80
 height = 60
 
-
 def draw():
-    im = Image.open("162908.jpg")
+    im = Image.open("2222.png")
     im = im.resize((width, height), Image.NEAREST)
     txt = ""
     for i in range(height):
@@ -20,8 +14,8 @@ def draw():
     with open("dora.txt", 'w') as f:
         f.write(txt)
 
-
 def get_char(r, g, b, alpha=256):
+    ascii_char = list("$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ")
     if alpha == 0:
         return ' '
     length = len(ascii_char)
