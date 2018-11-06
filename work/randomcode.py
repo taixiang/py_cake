@@ -1,6 +1,8 @@
 from PIL import Image, ImageDraw, ImageFont
 import random
 
+width = 160
+height = 50
 
 # 生成随机颜色
 def getRandomColor():
@@ -17,17 +19,31 @@ def getRandomStr():
     random_char = random.choice([random_num, random_lower, random_upper])
     return random_char
 
+def drawLine(draw):
+    for i in range(5):
+        x1 = random.randint(0, width)
+        x2 = random.randint(0, width)
+        y1 = random.randint(0, height)
+        y2 = random.randint(0, height)
+        draw.line((x1, y1, x2, y2), fill=getRandomColor())
+
+def drawPoint(draw):
+    for i in range(50):
+        draw.point((random.randint(0, width),random.randint(0, height)),fill=getRandomColor())
 
 def createImg():
-    img = Image.new(mode="RGB", size=(150, 40), color=getRandomColor())
-    img = img.convert("RGBA")
-    img.putalpha(205)
+    bg_color = getRandomColor()
+    img = Image.new(mode="RGB", size=(width, height), color=bg_color)
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(font="arial.ttf", size=28)
+    font = ImageFont.truetype(font="arial.ttf", size=36)
     for i in range(5):
         random_item = getRandomStr()
-        print(random_item)
-        draw.text((10 + 18 * i, 0), text=random_item, fill=getRandomColor(), font=font)
+        txt_color = getRandomColor()
+        while txt_color == bg_color:
+            txt_color = getRandomColor()
+        draw.text((10 + 30 * i, 3), text=random_item, fill=txt_color, font=font)
+    drawLine(draw)
+    drawPoint(draw)
     with open("pic.png", "wb") as f:
         img.save(f, format="png")
 
