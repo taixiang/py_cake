@@ -17,6 +17,7 @@ from django.conf.urls import url, include, handler403, handler404, handler500
 from django.contrib import admin
 from cake import views
 from rest_framework import routers
+from django.views.generic.base import TemplateView
 
 router = routers.DefaultRouter()
 router.register(r'category', views.CategoryViewSet)
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls', namespace='blog', app_name='blog')),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^vue/', TemplateView.as_view(template_name="test.html")),
 
 ]
 handler403 = views.page_not_find
