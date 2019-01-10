@@ -6,11 +6,10 @@ import re
 import jieba
 
 def file(root):
-    file_list = os.listdir(root)
     total = ""
+    file_list = os.listdir(root)
     for file in file_list:
         path = os.path.join(root,file)
-        # path = "F:\新建文件夹\md\\" + file
         text = open(path, encoding='utf-8').read()
         total = total + "\n" + text
 
@@ -26,7 +25,7 @@ def file(root):
         background_color="white",
         # 设置最大显示的词云数
         max_words=1000,
-        # 这种字体都在电脑字体中，window在C:\Windows\Fonts\下，mac我选的是/System/Library/Fonts/PingFang.ttc 字体
+        # 这种字体都在电脑字体中，window在C:\Windows\Fonts\下，mac下的是/System/Library/Fonts/PingFang.ttc 字体
         font_path='C:\\Windows\\Fonts\\STFANGSO.ttf',
         height=4000,
         width=4000,
@@ -39,8 +38,12 @@ def file(root):
     # 展示词云图
     plt.imshow(myword)
     plt.axis("off")
-    plt.show()
-    wc.to_file('blog.png')  # 把词云保存下
+    plt.savefig("getsex.png")  # 保存图片
+    plt.ion()
+    plt.pause(5)
+    plt.close()  # 图片显示5s，之后关闭
+    # plt.show()
+    # wc.to_file('blog.png')  # 把词云保存下
 
 def word(filename):
     text = open(filename, encoding='utf-8').read()
